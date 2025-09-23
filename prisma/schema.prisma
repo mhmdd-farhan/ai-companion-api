@@ -17,7 +17,7 @@ datasource db {
 model User {
   id          String    @id @default(uuid())
   name        String @unique
-  messages    Message[]
+  messages    Chat[]
   created_at  DateTime? @default(now())
   updated_at  DateTime?
 
@@ -28,22 +28,35 @@ model Persona {
   id           Int       @id @default(autoincrement())
   name         String
   systemPrompt String
-  messages     Message[]
+  messages     Chat[]
 
   @@map("personas")
 }
 
-model Message {
+model Chat {
   id        Int      @id @default(autoincrement())
-  content   String
-  reply     String
 
   user_id   String
   user      User @relation(fields: [user_id], references: [id])
   persona_id Int
   Persona   Persona  @relation(fields: [persona_id], references: [id])
 
-  createdAt DateTime @default(now())
+  message_items MessageItem[]
 
-  @@map("messages")
+  created_at DateTime @default(now())
+
+  @@map("chats")
+}
+
+model MessageItem {
+  id Int @id @default(autoincrement())
+  content String
+  reply String
+
+  chat_id Int
+  message Chat @relation(fields: [chat_id], references: [id])
+
+  created_at DateTime @default(now())
+
+  @@map("message_items")
 }
