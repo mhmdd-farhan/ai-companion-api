@@ -1,5 +1,5 @@
 
 export interface PersonaPayload {
-    name: string,
-    systemPrompt: string
+    name: string;
+    systemPrompt: string;
 }

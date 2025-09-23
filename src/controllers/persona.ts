@@ -14,9 +14,7 @@ export async function addPersonaController(c: Context) {
 
 export async function getPersonaController(c: Context) {
     try {
-        const { id } = c.req.param();
-        const parsedId = Number(id);
-        const personaData = await getPersonaService(parsedId);
+        const personaData = await getPersonaService();
 
         return c.json(personaData, 200)
     } catch (error: Error | any) {

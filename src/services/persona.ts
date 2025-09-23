@@ -20,23 +20,21 @@ export async function addPersonaService({ name, systemPrompt }: PersonaPayload) 
             }
         }
     } catch (error) {
+        console.error(error);
         throw new Error("There are something wrong with server")
     }
 }
 
-export async function getPersonaService(id: number) {
+export async function getPersonaService() {
     try {
-        const data = await prisma.persona.findUnique({
-            where: {
-                id
-            }
-        });
+        const data = await prisma.persona.findMany();
 
         return {
             message: "Get a persona success",
             data
         }
     } catch (error) {
+        console.error(error);
         throw new Error("There are something wrong with server");
     }
 }
@@ -59,6 +57,7 @@ export async function updatePersonaService(id: number, { name, systemPrompt }: P
             data
         }
     } catch (error) {
+        console.error(error);
         throw new Error("There are something wrong with server");
     }
 }

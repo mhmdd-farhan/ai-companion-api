@@ -5,7 +5,7 @@ import { addPersonaController, getPersonaController, updatePersonaController } f
 const personaRouter = new Hono();
 
 personaRouter.post("/", addPersonaController);
-personaRouter.get("/:id", getPersonaController);
+personaRouter.get("/", getPersonaController);
 personaRouter.put("/:id", updatePersonaController);
 
 export default personaRouter;
