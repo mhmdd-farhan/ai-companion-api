@@ -17,7 +17,7 @@ datasource db {
 model User {
   id          String    @id @default(uuid())
   name        String @unique
-  messages    Chat[]
+  chats    Chat[]
   created_at  DateTime? @default(now())
   updated_at  DateTime?
 
@@ -28,13 +28,13 @@ model Persona {
   id           Int       @id @default(autoincrement())
   name         String
   systemPrompt String
-  messages     Chat[]
+  chats     Chat[]
 
   @@map("personas")
 }
 
 model Chat {
-  id        Int      @id @default(autoincrement())
+  id        String      @id @default(uuid())
 
   user_id   String
   user      User @relation(fields: [user_id], references: [id])
@@ -52,8 +52,9 @@ model MessageItem {
   id Int @id @default(autoincrement())
   content String
   reply String
+  latency String?
 
-  chat_id Int
+  chat_id String
   message Chat @relation(fields: [chat_id], references: [id])
 
   created_at DateTime @default(now())
