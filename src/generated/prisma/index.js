@@ -166,6 +166,14 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "windows"
+      },
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -192,8 +200,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id         String    @id @default(uuid())\n  name       String    @unique\n  chats      Chat[]\n  created_at DateTime? @default(now())\n  updated_at DateTime?\n\n  @@map(\"users\")\n}\n\nmodel Persona {\n  id           Int    @id @default(autoincrement())\n  name         String\n  systemPrompt String\n  chats        Chat[]\n\n  @@map(\"personas\")\n}\n\nmodel Chat {\n  id String @id @default(uuid())\n\n  user_id    String\n  user       User    @relation(fields: [user_id], references: [id])\n  persona_id Int\n  Persona    Persona @relation(fields: [persona_id], references: [id])\n\n  message_items MessageItem[]\n\n  created_at DateTime @default(now())\n\n  @@map(\"chats\")\n}\n\nmodel MessageItem {\n  id      Int     @id @default(autoincrement())\n  content String\n  reply   String\n  latency String?\n\n  chat_id String\n  message Chat   @relation(fields: [chat_id], references: [id])\n\n  created_at DateTime @default(now())\n\n  @@map(\"message_items\")\n}\n",
-  "inlineSchemaHash": "5d518abb7740b780b9ade354c83cc1b8bf9a49cc0b56cac1e8159d59ba631d38",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  binaryTargets = [\"native\", \"windows\", \"debian-openssl-3.0.x\"]\n  output        = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id         String    @id @default(uuid())\n  name       String    @unique\n  chats      Chat[]\n  created_at DateTime? @default(now())\n  updated_at DateTime?\n\n  @@map(\"users\")\n}\n\nmodel Persona {\n  id           Int    @id @default(autoincrement())\n  name         String\n  systemPrompt String\n  chats        Chat[]\n\n  @@map(\"personas\")\n}\n\nmodel Chat {\n  id String @id @default(uuid())\n\n  user_id    String\n  user       User    @relation(fields: [user_id], references: [id])\n  persona_id Int\n  Persona    Persona @relation(fields: [persona_id], references: [id])\n\n  message_items MessageItem[]\n\n  created_at DateTime @default(now())\n\n  @@map(\"chats\")\n}\n\nmodel MessageItem {\n  id      Int     @id @default(autoincrement())\n  content String\n  reply   String\n  latency String?\n\n  chat_id String\n  message Chat   @relation(fields: [chat_id], references: [id])\n\n  created_at DateTime @default(now())\n\n  @@map(\"message_items\")\n}\n",
+  "inlineSchemaHash": "2cc90a5e5014bb097039e2aa43b8d5fa6ed62b9132640fed87c72012189ac8f7",
   "copyEngine": true
 }
 
@@ -234,6 +242,10 @@ Object.assign(exports, Prisma)
 // file annotations for bundling tools to include these files
 path.join(__dirname, "query_engine-windows.dll.node");
 path.join(process.cwd(), "src/generated/prisma/query_engine-windows.dll.node")
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
+path.join(process.cwd(), "src/generated/prisma/libquery_engine-debian-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "src/generated/prisma/schema.prisma")
