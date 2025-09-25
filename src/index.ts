@@ -12,9 +12,10 @@ dotenv.config();
 
 const app = new Hono();
 const port = getDinamicPort();
+const FRONTEND_URL = process.env.FRONTEND_URL as string;
 
 app.use("*", cors({
-  origin: "http://localhost:5173"
+  origin: FRONTEND_URL
 }))
 
 app.all("*", checkAPiKey);
