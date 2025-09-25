@@ -20,6 +20,7 @@ A smart AI chatbot backend that allows custom AI roles for each chat, providing 
 - **Framework**: Hono.js
 - **Language**: TypeScript
 - **ORM**: Prisma
+- **AI Model**: gpt-4o-mini
 - **Database**: PostgreSQL
 
 ## Integrated Frontend Application
