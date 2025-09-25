@@ -1,8 +1,11 @@
 import { Hono } from "hono";
-import { addNewMessageController } from "../controllers/message.js";
+import { addNewMessageController, getAllMessageController, getMessageController } from "../controllers/message.js";
+import { addMessageLimiter } from "../limiter/message.js";
 
 const messagerouter = new Hono();
 
-messagerouter.post("/", addNewMessageController);
+messagerouter.post("/", addMessageLimiter, addNewMessageController);
+messagerouter.get("/", getAllMessageController);
+messagerouter.get("/:chat_id", getMessageController);
 
 export default messagerouter;

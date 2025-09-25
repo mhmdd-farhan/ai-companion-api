@@ -1,4 +1,4 @@
 export interface MessagePayload {
-    chat_id: number;
+    chat_id: string;
     content: string;
 }
