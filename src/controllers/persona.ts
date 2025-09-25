@@ -1,5 +1,5 @@
 import type { Context } from "hono";
-import { addPersonaService, getPersonaService, updatePersonaService } from "../services/persona.js";
+import { addPersonaService, getAllPersonaService, getPersonaService, updatePersonaService } from "../services/persona.js";
 
 
 export async function addPersonaController(c: Context) {
@@ -12,11 +12,22 @@ export async function addPersonaController(c: Context) {
     }
 }
 
-export async function getPersonaController(c: Context) {
+export async function getAllPersonaController(c: Context) {
     try {
-        const personaData = await getPersonaService();
+        const personaData = await getAllPersonaService();
 
         return c.json(personaData, 200)
+    } catch (error: Error | any) {
+        return c.json({ message: error.message }, 500);
+    }
+}
+
+export async function getPersonaController(c: Context) {
+    try {
+        const { id } = c.req.param();
+        const persona = await getPersonaService(Number(id));
+
+        return c.json(persona, 200);
     } catch (error: Error | any) {
         return c.json({ message: error.message }, 500);
     }

@@ -25,17 +25,48 @@ export async function addPersonaService({ name, systemPrompt }: PersonaPayload) 
     }
 }
 
-export async function getPersonaService() {
+export async function getAllPersonaService() {
     try {
-        const data = await prisma.persona.findMany();
+        const data = await prisma.persona.findMany({
+            include: {
+                chats: {
+                    select: {
+                        id: true,
+                        message_items: {
+                            select: {
+                                id: true
+                            }
+                        }
+                    }
+                }
+            }
+        })
 
         return {
-            message: "Get a persona success",
+            message: "Get all persona success",
             data
         }
     } catch (error) {
         console.error(error);
-        throw new Error("There are something wrong with server");
+        throw new Error("There are something wrong with server")
+    }
+}
+
+export async function getPersonaService(id: number) {
+    try {
+        const data = await prisma.persona.findUnique({
+            where: {
+                id
+            }
+        });
+
+        return {
+            message: "Get persona by id success",
+            data
+        }
+    } catch (error) {
+        console.error(error);
+        throw new Error("There are something wrong with server")
     }
 }
 
